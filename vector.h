@@ -118,3 +118,7 @@ inline vector& vector::operator/=(const float t) {
  c[2] /= k;
  return *this;
 }
+
+inline vector unit_vector(vector v){
+    return v/v.norm();
+}
