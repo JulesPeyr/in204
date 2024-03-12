@@ -1,11 +1,17 @@
 #include <iostream>
 #include "sdltemplate.h"    /* biblitothèque qui va nous permettre de "dessiner" sur un écran, template qui facilite son utilisation*/
-#include "ray.h" /* les rayons qu'on va lancer*/
+
+#include "hitable.h"
 using namespace sdltemplate;
 
+
+
 vector color(const ray& r){
+    if(hit_sphere(vector(0,0,-1),0.5,r)){ /* si le rayon touche la sphère c'est vert*/
+        return vector(0,1,0);
+    }
     vector unit_direction = unit_vector(r.direction());
-    float t = 0.5*(unit_direction.y() + 1.0);
+    float t = 0.5*(unit_direction.y() + 1.0);  /*sinon le dégradé de bleu*/
     return (1.0-t)*vector(1.0,1.0,1.0) + t*vector(0.5,0.7,1.0);
 
 }
