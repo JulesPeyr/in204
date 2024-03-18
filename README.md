@@ -11,7 +11,7 @@ Pour utiliser le Makefile il faut que la commande `make` soit installée, il suf
 ### clean
 Pour nettoyer les fichiers `*.o`, `*.h*.gch` et `raytracer` la commande `make clean` peut être utilisée. 
 
-## Vector.h
+## vector.h
 _Ce fichier contient la definition de la classe `vector`. Cette classe est utilisée pour stocker des vecteurs de **R**x**R**x**R** mais aussi des couleurs rgb_
 _La classe contient également une définition de type pour rendre plus rapide la definition de vecteurs et de couleurs :_
 
@@ -63,7 +63,7 @@ std::cout << myVec << std::endl; //prints 1.5 0.0 0.0
 ## Opérations sur les vecteurs
 Les opérateurs `+,-,*,/,+=,-=,*=,/=` sont surchargés pour implémenter l'arithmétique composante par composante. 
 
-LA classe dispose de deux méthodess: le calcul de la norme, et la mise à la norme d'un vecteur.
+La classe dispose de deux méthodess: le calcul de la norme, et la mise à la norme d'un vecteur.
 
 ```c++
 float norm();
@@ -79,21 +79,41 @@ vector<T> cross(const vector<T>&, const vector<T>&);
 float dot(const vector<T>&, const vector<T>&);
 ```
 
-## Utilisation de drawing.h
-
-### couleurs
-Le fichier contient une définition de type permettant de définir des couleurs rgb:
-
+## ray.h
+_Ce fichier contient une implémentation assez simple d'un 'rayon'. Un rayon est constitué d'un point origine et d'une direction :_
 ```c++
-typedef struct color_ {
-	unsigned char r,g,b;
-} color;
+vector A; // origine
+vector B; // direction
 ```
 
+### Initialisation
+Pour initialiser un nouveau rayon, on doit lui fournir une origine et une direction :
+```c++
+ray myRay = ray(Rvector origine, Rvector direction);
+```
+
+### Accesseurs
+L'objet dispose de deux accesseurs :
+```c++
+Rvector origin();
+Rvector direction();
+```
+
+### Méthodes
+Une seule méthode est définie, et sert à renvoyer les coordonées d'un point paramétré sur la droite engendrée par le vecteur direction et passant par l'origine :
+```c++
+Rvector point_at_parameter(float t); //return A + t*B
+```
+
+## drawing.h
+_Ce fichier contient une classe permettant de faciliter la création d'une image_
+
+### couleurs
+Le format de couleurs utilisé est celui définit dans le fichier `vector.h`.
 Ainsi pour définir la couleur noire on écrira simplement :
 
 ```c++
-color black = {0,0,0};
+color black = color(0,0,0);
 ```
 
 ### Initialisation du tableau sur lequel on veut écrire
