@@ -2,6 +2,14 @@
 
 _Par Jules Peyrache et Benoît Boero_
 
+## Utilisation du Makefile
+
+### make
+Pour utiliser le Makefile il faut que la commande `make` soit installée, il suffit ensuite d'executer la commande `make` pour compiler les fichiers source et créer le fichier `raytracer` qui est l'executable principal.
+
+### clean
+Pour nettoyer les fichiers `*.o`, `*.h*.gch` et `raytracer` la commande `make clean` peut être utilisée. 
+
 ## Utilisation de drawing.h
 
 ### couleurs
