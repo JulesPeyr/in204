@@ -137,11 +137,6 @@ template <typename T> inline vector<T> vector<T>::operator/=(const float t) {
  return *this;
 }
 
-template <typename T> inline vector<T> unit_vector(vector<T> v){
-    return v/v.norm();
-}
-
-
 typedef vector<float> Rvector;
 typedef vector<int> color;
 
