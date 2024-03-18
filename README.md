@@ -46,13 +46,13 @@ Où `x,y` sont les coordonées entières et `c` la couleur. L'origine est en bas
 |
 |
 |
-0------>
+0-------->
 
 ```
 
 ### Envoyer l'image vers std::cout
 ```c++
-tableau.print_image(x,y,c);
+tableau.print_image;
 ```
 
 ### Sauvegarde de l'image au format .pnm
