@@ -3,11 +3,9 @@
 
 #include <iostream>
 #include <fstream>
-using namespace std;
+#include "vector.h"
 
-typedef struct color_ {
-	unsigned char r,g,b;
-} color;
+using namespace std;
 
 class drawing {
 	public:
@@ -47,7 +45,7 @@ class drawing {
 
 //we store the three rgb values as a single int
 inline unsigned int drawing::rgb_to_int(color c) {
-	return((c.r<<16)+(c.g<<8)+c.b);
+	return((c.r()<<16)+(c.g()<<8)+c.b());
 }
 
 inline unsigned char drawing::int_to_r(unsigned int rgb) {
