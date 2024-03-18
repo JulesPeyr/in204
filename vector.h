@@ -14,12 +14,12 @@ class vector {
         vector() {}
         vector(T c0, T c1, T c2) {c[0]=c0;c[1]=c1; c[2]=c2;}
 
-        inline float x() const {return c[0];}
-        inline float y() const {return c[1];}
-        inline float z() const {return c[2];}
-        inline float r() const {return c[0];}
-        inline float g() const {return c[1];}
-        inline float b() const {return c[2];}
+        inline T x() const {return c[0];}
+        inline T y() const {return c[1];}
+        inline T z() const {return c[2];}
+        inline T r() const {return c[0];}
+        inline T g() const {return c[1];}
+        inline T b() const {return c[2];}
 
         inline const vector<T>& operator+() const {return *this;}
         inline vector<T> operator-() const {return vector(-c[0],-c[1],-c[2]);}
