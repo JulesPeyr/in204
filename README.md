@@ -3,12 +3,81 @@
 _Par Jules Peyrache et Benoît Boero_
 
 ## Utilisation du Makefile
+_Le projet contient un Makefile basique pour rendre plus simple la création de l'executable_
 
 ### make
 Pour utiliser le Makefile il faut que la commande `make` soit installée, il suffit ensuite d'executer la commande `make` pour compiler les fichiers source et créer le fichier `raytracer` qui est l'executable principal.
 
 ### clean
 Pour nettoyer les fichiers `*.o`, `*.h*.gch` et `raytracer` la commande `make clean` peut être utilisée. 
+
+## Vector.h
+_Ce fichier contient la definition de la classe `vector`. Cette classe est utilisée pour stocker des vecteurs de **R**x**R**x**R** mais aussi des couleurs rgb_
+_La classe contient également une définition de type pour rendre plus rapide la definition de vecteurs et de couleurs :_
+
+```c++
+typedef vector<int> color;
+typedef vector<float> Rvector;
+```
+
+### Initialisation d'un objet
+Le constructeur à utiliser pour initialiser un nouveau vecteur prend en argument trois `float` correspondant aux coordonnées :
+```c++
+Rvector myVec = Rvector(float x, float y, float z);
+```
+Pour créer une nouvelle 'couleur' on utilisera :
+```c++
+color myColor = color(int r, int g, int b);
+```
+
+### Accesseurs
+On dispose de différents accesseurs :
+```c++
+float x();
+float y();
+float z();
+```
+Pour récupérer les coordonnées d'un vecteur.
+Ex:
+```c++
+Rvector myVec = Rvector(1.5, 0.0, 0.0);
+std::cout << myVec.x() << std::endl; //prints 1.5
+```
+
+Ainsi que :
+```c++
+int r();
+int g();
+int b();
+```
+Pour récupérer les composantes d'une couleur (de la même manière).
+
+### Affichage
+Il y a surcharge des opérateurs `>>` et `<<` pour simplifier l'affichage des composantes d'un vecteur :
+
+```c++
+Rvector myVec = Rvector(1.5, 0.0, 0.0);
+std::cout << myVec << std::endl; //prints 1.5 0.0 0.0
+```
+
+## Opérations sur les vecteurs
+Les opérateurs `+,-,*,/,+=,-=,*=,/=` sont surchargés pour implémenter l'arithmétique composante par composante. 
+
+LA classe dispose de deux méthodess: le calcul de la norme, et la mise à la norme d'un vecteur.
+
+```c++
+float norm();
+void make_unit_vector();
+
+```
+
+
+Le fichier contient par ailleurs la definition de deux fonctions implémentant respectivement le produit scalaire et vectoriel :
+
+```c++
+vector<T> cross(const vector<T>&, const vector<T>&);
+float dot(const vector<T>&, const vector<T>&);
+```
 
 ## Utilisation de drawing.h
 
