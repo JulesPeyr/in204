@@ -5,8 +5,8 @@
 
 struct hit_record {
     float t; 
-    vector p;
-    vector normal;
+    Rvector p;
+    Rvector normal;
 };
 
 class hitable {  /*classe parente des objects avec lesquels les rayons pourront interagir*/
