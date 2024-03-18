@@ -1,3 +1,6 @@
+#ifndef OBJECTS_H
+#define OBJECTS_H
+
 #include "hitable.h"
 
 class sphere: public hitable{
@@ -26,3 +29,5 @@ bool sphere::hit(const ray& r, float t_min, float t_max,hit_record& rec) const {
     }
     return false;
 }
+
+#endif

@@ -14,7 +14,6 @@ class drawing {
 		//constructors
 		drawing() {}
 		drawing(const int l, const int h) {
-			cout<<"creating new canvas !\n";
 			length=l;
 			height=h;
 			canvas=new unsigned int [l*h];

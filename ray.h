@@ -1,3 +1,6 @@
+#ifndef RAY_H
+#define RAY_H
+
 #include "vector.h"
 
 class ray{
@@ -11,3 +14,5 @@ class ray{
         vector A;
         vector B;
 };
+
+#endif

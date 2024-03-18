@@ -1,3 +1,7 @@
+#ifndef VECTOR_H
+#define VECTOR_H
+
+
 #include <math.h>
 #include <stdlib.h>
 #include <iostream>
@@ -122,3 +126,5 @@ inline vector& vector::operator/=(const float t) {
 inline vector unit_vector(vector v){
     return v/v.norm();
 }
+
+#endif
