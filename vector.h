@@ -131,9 +131,9 @@ template <typename T> inline vector<T> vector<T>::operator*=(const float t) {
 }
 template <typename T> inline vector<T> vector<T>::operator/=(const float t) {
  float k = 1.0/t;
- c[0] /= k;
- c[1] /= k;
- c[2] /= k;
+ c[0] *= k;
+ c[1] *= k;
+ c[2] *= k;
  return *this;
 }
 
