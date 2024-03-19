@@ -2,6 +2,7 @@
 #define MATERIALH
 
 #include "camera.h"
+#include "string.h"
 
 Rvector random_in_unit_sphere(){                                            
     Rvector p;
@@ -16,34 +17,39 @@ Rvector reflect(const Rvector& v, const Rvector& n){    /*réflexion sur une sur
 }
 
 class material {
-    public:
-        virtual bool scatter(const ray& r_in, const hit_record& rec, Rvector& attenuation, ray& scattered) const = 0;
+public:
+    virtual bool scatter(const ray& r_in, const hit_record& rec, Rvector& attenuation, ray& scattered) const = 0;
+    virtual std::string name() const = 0; // Méthode pour obtenir le nom du matériau
 };
 
 class matte : public material {
-    public:
-        matte(const Rvector& a) : attenuation(a) {}
-        virtual bool scatter(const ray& r_in, const hit_record& rec, Rvector& att, ray& scattered) const {
-            Rvector target = rec.p + rec.normal + random_in_unit_sphere();
-            scattered = ray(rec.p, target-rec.p);
-            att = attenuation;
-            return true;
-        }
-        Rvector attenuation;
+public:
+    matte(const Rvector& a) : attenuation(a) {}
+    virtual bool scatter(const ray& r_in, const hit_record& rec, Rvector& att, ray& scattered) const {
+        Rvector target = rec.p + rec.normal + random_in_unit_sphere();
+        scattered = ray(rec.p, target-rec.p);
+        att = attenuation;
+        return true;
+    }
+    virtual std::string name() const override { return "matte"; } // Retourne le nom du matériau
+    Rvector attenuation;
 };
 
 class metal : public material {
-    public:
-        metal(const Rvector& a) : attenuation(a) {}
-        virtual bool scatter(const ray& r_in, const hit_record& rec, Rvector& att, ray& scattered) const {
-            Rvector unit_direction = r_in.direction();
-            unit_direction.make_unit_vector();
-            Rvector reflected = reflect(unit_direction, rec.normal);
-            scattered = ray(rec.p, reflected);
-            att = attenuation;
-            return(dot(scattered.direction(), rec.normal)>0);
-        }
-        Rvector attenuation;
+public:
+    metal(const Rvector& a) : attenuation(a) {
+        std::cout << "metal mat_ptr address: " << this << std::endl;
+    }
+    virtual bool scatter(const ray& r_in, const hit_record& rec, Rvector& att, ray& scattered) const {
+        Rvector unit_direction = r_in.direction();
+        unit_direction.make_unit_vector();
+        Rvector reflected = reflect(unit_direction, rec.normal);
+        scattered = ray(rec.p, reflected);
+        att = attenuation;
+        return(dot(scattered.direction(), rec.normal)>0);
+    }
+    virtual std::string name() const override { return "metal"; } // Retourne le nom du matériau
+    Rvector attenuation;
 };
 
 #endif

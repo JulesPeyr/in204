@@ -12,7 +12,7 @@ Rvector couleur(const ray& r, hitable* world, int depth){
     if(world->hit(r,0.001,MAXFLOAT,rec)){ 
         ray scattered;
         Rvector attenuation;
-        if (depth < 50 && rec.mat_ptr->scatter(r,rec,attenuation,scattered)) {
+        if (depth < 50 && rec.mat_ptr && rec.mat_ptr->scatter(r,rec,attenuation,scattered)) {
             return attenuation*couleur(scattered,world,depth+1);
         }
         else{
@@ -29,15 +29,16 @@ Rvector couleur(const ray& r, hitable* world, int depth){
 }
 
 int main(){
-    int width = 200;
-    int height = 100;
+    int width = 800;
+    int height = 400;
     int ns = 100;
     std::cout << "P3\n" << width << " " << height << "\n255\n";   /* headers du fichier ppm, format d'image assez intuitif*/
     hitable* list[4];                           
     list[0] = new sphere(Rvector(0,0,-1),0.5, new matte(Rvector(0.8,0.1,0.1)));    /* petite boule*/
     list[1] = new sphere(Rvector(0,-100.5,-1),100, new matte(Rvector(0.8,0.8,0.0)));
-    list[2] = new sphere(Rvector(1,0,-1), 0.5, new metal(Rvector(0.8,0.6,0.2)));
-    list[3] = new sphere(Rvector(-1,0,-1), 0.5, new metal(Rvector(0.8,0.8,0.8)));
+    list[2] = new sphere(Rvector(1,0,-1),0.5, new metal(Rvector(0.8,0.6,0.2)));
+    list[3] = new sphere(Rvector(1,0,-1),0.5, new metal(Rvector(0.8,0.8,0.8)));
+    
     hitable* world = new hitable_list(list,4);
     camera cam;
     for(int y = height-1; y>=00; y--) {
