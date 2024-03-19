@@ -2,14 +2,15 @@
 #define OBJECTS_H
 
 #include "hitable.h"
-
+class material;
 class sphere: public hitable{
     public:
         sphere() {}
-        sphere(Rvector cen,float r) : center(cen), radius(r) {};
+        sphere(Rvector cen,float r, material* mat) : center(cen), radius(r), mat_ptr(mat) {};
         virtual bool hit(const ray& r, float t_min,float t_max, hit_record& rec) const;
         Rvector center;
         float radius;
+        material* mat_ptr;
 
 };
 bool sphere::hit(const ray& r, float t_min, float t_max,hit_record& rec) const { /* définit la hitbox d'une sphère et si le rayon r la percute*/

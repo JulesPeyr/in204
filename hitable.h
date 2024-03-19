@@ -2,11 +2,13 @@
 #define HITABLE_H
 
 #include "ray.h"
+class material;
 
 struct hit_record {
     float t; 
     Rvector p;
     Rvector normal;
+    material* mat_ptr;
 };
 
 class hitable {  /*classe parente des objects avec lesquels les rayons pourront interagir*/
