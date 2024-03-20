@@ -36,8 +36,8 @@ int main(){
     hitable* list[4];                           
     list[0] = new sphere(Rvector(0,0,-1),0.5, new matte(Rvector(0.8,0.1,0.1)));    /* petite boule*/
     list[1] = new sphere(Rvector(0,-100.5,-1),100, new matte(Rvector(0.8,0.8,0.0)));
-    list[2] = new sphere(Rvector(1,0,-1),0.5, new metal(Rvector(0.8,0.6,0.2)));
-    list[3] = new sphere(Rvector(1,0,-1),0.5, new metal(Rvector(0.8,0.8,0.8)));
+    list[2] = new sphere(Rvector(1,0,-1),0.5, new metal(Rvector(0.8,0.6,0.2),0.3));
+    list[3] = new sphere(Rvector(1,0,-1),0.5, new metal(Rvector(0.8,0.8,0.8),1));
     
     hitable* world = new hitable_list(list,4);
     camera cam;

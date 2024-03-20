@@ -37,19 +37,20 @@ public:
 
 class metal : public material {
 public:
-    metal(const Rvector& a) : attenuation(a) {
-        std::cout << "metal mat_ptr address: " << this << std::endl;
+    metal(const Rvector& a, float f) : attenuation(a) {
+        if (f<1) fuzz = f; else fuzz = 1;
     }
     virtual bool scatter(const ray& r_in, const hit_record& rec, Rvector& att, ray& scattered) const {
         Rvector unit_direction = r_in.direction();
         unit_direction.make_unit_vector();
         Rvector reflected = reflect(unit_direction, rec.normal);
-        scattered = ray(rec.p, reflected);
+        scattered = ray(rec.p, reflected + fuzz*random_in_unit_sphere());
         att = attenuation;
         return(dot(scattered.direction(), rec.normal)>0);
     }
     virtual std::string name() const override { return "metal"; } // Retourne le nom du matériau
     Rvector attenuation;
+    float fuzz;
 };
 
 #endif
