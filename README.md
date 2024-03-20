@@ -46,7 +46,7 @@ Le repère local de la caméra est définit avec l'axe z s'éloignant de la scè
 
 # définit la position du point vers lequel la caméra est dirigée (quel point on regarde).
 # valeur par défaut : 0.0, 0.0, -1.0
-.camera_subjec(float, float, float);
+.camera_subject(float, float, float);
 
 # définit le vecteur vertical de la caméra
 # valeur par défaut : 0.0, 1.0, 0.0
@@ -59,9 +59,17 @@ Le repère local de la caméra est définit avec l'axe z s'éloignant de la scè
 ```
 
 ### Paramètres objets
-Certains paramètres correspondent à des objets qu'on souhaite placer sur la scène, en voici la liste :
-```
-.sphere(p1,p2,p3);
+
+#### Matières
+Chaque objet peut être constitué d'une certaine matière, voici la liste des différentes matières disponibles :
+* Matte : `matte`
+* Métalique : `metal`
+
+#### Objets
+Certains paramètres correspondent à des objets que l'on souhaite placer sur la scène, en voici la liste :
+```python
+# Ajoute une sphère constituée d'une certaine matière, centrée en (x,y,z) et de rayon r sur la scène.
+.sphere(x,y,z,radius,matière);
 ```
 
 ### Exemples de fichier valide
