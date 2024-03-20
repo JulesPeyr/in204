@@ -24,13 +24,38 @@ flag name : width
 values : #100
 ```
 
-### Paramètres obligatoires
-Certains paramètres doivent imperativement être définits pour que la simulation puisse avoir lieu, ils sont listés ci-dessous :
+### Paramètres géométriques
+Le repère local de la caméra est définit avec l'axe z s'éloignant de la scène, et l'axe y vertical ascendant.
 
-```
+```python
+# définit la hauteur de l'image produite
+# valeur par défaut : 720
 .height(int);
+
+# définit la largeur de l'image produite
+# valeur par défaut : 360
 .width(int);
+
+# définit le nombre de rayons utilisés pour l'antialiasing
+# valeur par défaut : 10
 .ns(int);
+
+# définit la position de la caméra (position depuis laquelle on regarde la scène).
+# valeur par défaut : 0.0, 0.0, 0.0
+.camera_origin(float, float, float);
+
+# définit la position du point vers lequel la caméra est dirigée (quel point on regarde).
+# valeur par défaut : 0.0, 0.0, -1.0
+.camera_subjec(float, float, float);
+
+# définit le vecteur vertical de la caméra
+# valeur par défaut : 0.0, 1.0, 0.0
+.camera_vertical(float, float, float);
+
+# définit le FOV (field of view) de la caméra en degrés
+# valeur par défaut : 90
+.camera_fov(float)
+
 ```
 
 ### Paramètres objets
