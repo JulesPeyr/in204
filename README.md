@@ -2,6 +2,54 @@
 
 _Par Jules Peyrache et Benoît Boero_
 
+## Utilisation du programme
+_Le programme prend en argument un nom de fichier parametrant la simulation_
+
+### Format de fichier
+On définit un format de fichier qui contient des `flags` sous la forme `.nom_flag(val_flag1, val_flag2, ...);`. Chaque flag correspond en fait à un paramètre, qui est définit en utilisant une ou plusieurs valeurs. Chacun de ces flags commence par le caractère `.` et se termine par le caractère `;`, les caractères `(`, `)`, `,` sont aussi importants. Les espaces superflus sont ignorés.
+
+### Commentaires
+Les lignes commençant par le caractère `#` sont considérées comme commentaires et sont affichées lors du chargement du fichier pour donner du context. Par exemple :
+
+```
+# Definition de la largeur de l'image
+.width(100);
+```
+
+Résultera en :
+
+```
+>  Definition de la largeur de l'image
+flag name : width
+values : #100
+```
+
+### Paramètres obligatoires
+Certains paramètres doivent imperativement être définits pour que la simulation puisse avoir lieu, ils sont listés ci-dessous :
+
+```
+.height(int);
+.width(int);
+.ns(int);
+```
+
+### Paramètres objets
+Certains paramètres correspondent à des objets qu'on souhaite placer sur la scène, en voici la liste :
+```
+.sphere(p1,p2,p3);
+```
+
+### Exemples de fichier valide
+Quelques exemples concrets de fichiers `.ray` sont fournits avec le projet. En voici un exemple :
+
+```
+---[exemple.ray]---
+
+.height(720);
+.width(1080);
+.ns(50);
+```
+
 ## Utilisation du Makefile
 _Le projet contient un Makefile basique pour rendre plus simple la création de l'executable_
 
