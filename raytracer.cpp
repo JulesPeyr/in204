@@ -3,15 +3,20 @@
 #include"hitable.h"
 #include<vector>
 #include<fstream>
+#include"material.h"
 
 using namespace std;
 
 //used to store parameters
 struct parameters {
-	int height;
-	int width;
-	int ns;
-	vector<hitable> objects;
+	int height{720};
+	int width{360};
+	int ns{10};
+	Rvector camera_origin{Rvector(0.0,0.0,0.0)};
+	Rvector camera_subject{Rvector(0.0,0.0,-1.0)};
+	Rvector camera_vertical{Rvector(0.0,1.0,0.0)};;
+	float camera_fov{90};
+	vector<sphere> spheres;
 };
 
 //used to find a string's position in a string vector
@@ -25,22 +30,75 @@ int find(string needle, vector<string> &haystack) {
 }
 
 //function used to set a parameter
-void set(string name, vector<string> values) {
-	vector<string> flags = {"height","width","ns","sphere"};
+void set(parameters *param, string name, vector<string> values) {
+	vector<string> flags = {"height","width","ns","camera_origin","camera_subject","camera_vertical","camera_fov","sphere"};
+	//TEMP DEFAULT MATTER
+	matte *tempMat=new matte(Rvector(0.8,0.1,0.1));
 	int n=find(name, flags);
 	switch(n) {
 		//setting height
 		case 0:
+			if(values.size()!=1) {
+				cout << "Too many arguments for the flag " << name << " : " << values.size() << " (excpected 1)";
+				break;
+			}
+			param->height=stoi(values[0]);
 			break;
+		//setting width
 		case 1:
-			//TODO
+			if(values.size()!=1) {
+				cout << "Too many arguments for the flag " << name << " : " << values.size() << " (excpected 1)";
+				break;
+			}
+			param->width=stoi(values[0]);
 			break;
+		//setting ns
 		case 2:
-			//TODO
+			if(values.size()!=1) {
+				cout << "Too many arguments for the flag " << name << " : " << values.size() << " (excpected 1)";
+				break;
+			}
+			param->ns=stoi(values[0]);
 			break;
+		//setting camera_origin
 		case 3:
-			//TODO
+			if(values.size()!=3) {
+				cout << "Too many/few arguments for the flag " << name << " : " << values.size() << " (excpected 3)";
+				break;
+			}
+			param->camera_origin=Rvector(stof(values[0]),stof(values[1]),stof(values[2]));	
 			break;
+		//setting camera_subject
+		case 4:
+			if(values.size()!=3) {
+				cout << "Too many/few arguments for the flag " << name << " : " << values.size() << " (excpected 3)";
+				break;
+			}
+			param->camera_subject=Rvector(stof(values[0]),stof(values[1]),stof(values[2]));	
+			break;
+		//setting camera_vertical
+		case 5:
+			if(values.size()!=3) {
+				cout << "Too many/few arguments for the flag " << name << " : " << values.size() << " (excpected 3)";
+				break;
+			}
+			param->camera_vertical=Rvector(stof(values[0]),stof(values[1]),stof(values[2]));	
+			break;
+		//setting camera_fov
+		case 6:
+			if(values.size()!=1) {
+				cout << "Too many arguments for the flag " << name << " : " << values.size() << " (excpected 1)";
+				break;
+			}
+			param->camera_fov=stof(values[0]);
+			break;
+		//creating a sphere
+			if(values.size()!=5) {
+				cout << "Too many arguments for the flag " << name << " : " << values.size() << " (expected 5)";
+				break;
+			}
+			param->spheres.push_back(sphere(Rvector(stof(values[0]),stof(values[1]),stof(values[2])), stof(values[3]), tempMat));
+
 		default:
 			cout << "Unrecognised flag : " << name <<  ". Ignoring the flag..." << endl;
 	}
@@ -105,7 +163,7 @@ parameters *load(string fileName) {
 				}
 				cout << endl;
 			}
-			set(flag_name,values);
+			set(ret, flag_name,values);
 			cout << endl;
 		}
 		values = {};
