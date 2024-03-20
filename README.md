@@ -68,8 +68,8 @@ Chaque objet peut être constitué d'une certaine matière, voici la liste des d
 #### Objets
 Certains paramètres correspondent à des objets que l'on souhaite placer sur la scène, en voici la liste :
 ```python
-# Ajoute une sphère constituée d'une certaine matière, centrée en (x,y,z) et de rayon r sur la scène.
-.sphere(x,y,z,radius,matière);
+# Ajoute une sphère constituée d'une certaine matière mat, centrée en (x,y,z) et de rayon r sur la scène.
+.sphere(x,y,z,r,mat);
 ```
 
 ### Exemples de fichier valide
