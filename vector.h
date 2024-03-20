@@ -98,6 +98,11 @@ inline myVector<T> cross(const myVector<T> &v1, const myVector<T> &v2) {
 	v1.c[0]*v2.c[1] - v1.c[1]*v2[0]);
 }
 
+template <typename T>
+inline myVector<T> unit_vector(const myVector<T> &v) {
+	return v/v.norm();
+}
+
 template <typename T> 
 inline myVector<T> myVector<T>::operator+=(const myVector<T> &v) {
  c[0] += v.c[0];
