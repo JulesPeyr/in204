@@ -25,7 +25,26 @@ int find(string needle, vector<string> &haystack) {
 }
 
 //function used to set a parameter
-void set(string name, vector<string> values);
+void set(string name, vector<string> values) {
+	vector<string> flags = {"height","width","ns","sphere"};
+	int n=find(name, flags);
+	switch(n) {
+		//setting height
+		case 0:
+			break;
+		case 1:
+			//TODO
+			break;
+		case 2:
+			//TODO
+			break;
+		case 3:
+			//TODO
+			break;
+		default:
+			cout << "Unrecognised flag : " << name <<  ". Ignoring the flag..." << endl;
+	}
+}
 
 //get next non-space char
 char sksp(fstream &pf) {
@@ -74,17 +93,19 @@ parameters *load(string fileName) {
 				cout << "Error : empty value for flag " << flag_name << ". Ignoring the flag..." << endl;
 			} else {
 				//geting flag values
+				cout << "values :";
 				while(c!=';' && !pf.eof()) {
 					values.push_back("");
 					while(c!=',' && c!=')' && !pf.eof() && c!=';') {
 						values.back()+=c;
 						c=pf.get();
 					}
-					cout << "value: " << values.back() << endl;
+					cout << " #" << values.back();
 					c=sksp(pf);
 				}
+				cout << endl;
 			}
-			//set(flag_name,values);
+			set(flag_name,values);
 			cout << endl;
 		}
 		values = {};
