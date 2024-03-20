@@ -34,7 +34,7 @@ class myVector {
         inline myVector<T> operator/=(const float t);
 
         inline float norm() const {return sqrt(c[0]*c[0]+ c[1]*c[1] + c[2]*c[2]);}
-        inline void make_unit_myVector();
+        inline void make_unit_vector();
     
         T c[3];
 };
@@ -52,7 +52,7 @@ inline std::ostream& operator<<(std::ostream &os, myVector<T> &t) {
 }
 
 template <typename T> 
-inline void myVector<T>::make_unit_myVector(){
+inline void myVector<T>::make_unit_vector(){
     float k = 1.0/norm();
     c[0]*=k;c[1]*=k;c[2]*=k;
 }
