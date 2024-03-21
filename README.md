@@ -92,7 +92,7 @@ On écrira plutôt :
 ```
 
 ### Exemples de fichier valide
-Quelques exemples concrets de fichiers `.ray` sont fournits avec le projet. En voici un exemple :
+Quelques exemples concrets de fichiers `.ray` sont fournits avec le projet dans le dossier exemples. En voici un exemple :
 
 ```
 ---[france.ray]---
