@@ -62,14 +62,14 @@ Le repère local de la caméra est définit avec l'axe z s'éloignant de la scè
 
 #### Matières
 Chaque objet peut être constitué d'une certaine matière, voici la liste des différentes matières disponibles :
-* Matte : `.material_matte(albedo_r, albedo_g, albedo_b, tag);`
-* Métalique : `.material_metal(albedo_r, albedo_g, albedo_b, fuzziness, tag);`
+* Matte : `.material_matte(R_r, R_g, R_b, tag);`
+* Métalique : `.material_metal(R_r, R_g, R_b, fuzziness, tag);`
 * Diélectrique : `.material_dielectric(ref_index, tag);`
 
 Explication des champs :
 
 * Le champ `tag` correspond à la réference que l'on utilisera dans la definition des sphères, c'est une chaine de caractères (sans les guillemets).
-* Les champs `albedo_x` correspondent à l'absorption de chaque couleur par l'objet, ils sont compris entre 0 et 1.
+* Les champs `R_x` correspondent à la réflexion de chaque couleur par l'objet, ils sont compris entre 0 et 1.
 * Le champ `fuzziness` correspond à l'ajout d'aléatoire dans la reflexion de la lumière à la surface du métal, il est compris entre 0 et 1. 0 correspond à une reflexion déterministe et 1 correspond à une quantité assez conséquente d'aléatoire. (Plus précisément on modifie la direction du rayon réfléchi en choisisant un nouveau point-cible dans la sphère de rayon `fuzziness` qui est centrée au bout du vecteur unitaire réfléchi).
 * Le champ `ref_index` correspond à l'indice de refraction de la matière diéléctrique.
 
@@ -95,12 +95,30 @@ On écrira plutôt :
 Quelques exemples concrets de fichiers `.ray` sont fournits avec le projet. En voici un exemple :
 
 ```
----[exemple.ray]---
+---[france.ray]---
+# A nos enfants !!
+#
+# anti alisasing
+.ns(20);
+# dim
+.width(1000);
+.height(1000);
+# camera
+.camera_origin(0,0,-2);
+# material
+.material_metal(1,0,0,0,m1);
+.material_metal(1,1,1,0,m2);
+.material_metal(0,0,1,0,m3);
+# objects
+.sphere(-1,0.25,0,0.5,m1);
+.sphere(0,0.25,0,0.5,m2);
+.sphere(1,0.25,0,0.5,m3);
 
-.height(720);
-.width(1080);
-.ns(50);
 ```
+
+Résultat :
+
+![france.pnm](/img/france.png "France.png")
 
 ## Utilisation du Makefile
 _Le projet contient un Makefile basique pour rendre plus simple la création de l'executable_
