@@ -1,0 +1,40 @@
+# Paramètres géométriques
+.width(1440);
+.height(2160);
+
+# Antialising
+.ns(100);
+
+# Parametre de camera
+.camera_subject(0,4,0);
+.camera_origin(0,7,-7);
+
+# Matériaux
+.material_matte(1,1,1,snow);
+.material_metal(0.2,0.2,0.2,0,sol);
+.material_matte(0,0,0,black);
+.material_dielectric(1.5,verre);
+.material_metal(1,0,0,0.5,metal_rouge);
+.material_metal(0,0,1,0.5,metal_bleu);
+.material_metal(0,0,0.5,0.5,metal_bleu_clair);
+.material_metal(0,1,0,0.5,metal_vert);
+.material_metal(1,1,0,0.5,metal_jaune);
+
+#sol
+.sphere(0,-100,0,100,sol);
+#corps
+.sphere(0,2,0,2,snow);
+.sphere(0,4,0,1.4,snow);
+.sphere(0,6,0,1,snow);
+#yeux
+.sphere(-0.38,6.55,-0.71,0.1,black);
+.sphere(0.38,6.55,-0.71,0.1,black);
+.output_file(snowman2.pnm);
+
+#décoration
+.sphere(-4,1,-4,1,metal_rouge);
+.sphere(3,0.5,-3,0.5,verre);
+.sphere(-3,0.3,-2.5,-0.3,metal_vert);
+.sphere(-4,1,4,1,metal_bleu);
+.sphere(4,1,4,1,metal_bleu_clair);
+

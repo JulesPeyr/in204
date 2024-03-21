@@ -1,0 +1,16 @@
+# canvas
+.width(500);
+.height(500);
+# antialisaing parameter
+.ns(50);
+# camera parameters
+.camera_origin(0.0,3.0,3.0);
+.camera_vertical(0.0,1.0,-1.0);
+# output file name
+.output_file(out.ppm);
+# materials
+.material_metal(0.8,0.8,0.8,0.5,metal);
+.material_dielectric(0.5,verre);
+#objects
+.sphere(-0.5,0.75,-1.0,1.5,metal);
+.sphere(1.0,0.5,0.0,1.0,verre);
