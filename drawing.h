@@ -175,7 +175,7 @@ void drawing::draw_image_multithreaded(const char *name_file, int num_threads, i
         threads.emplace_back([&](int start, int end) {
             for (int y = start; y < end; ++y) {
 	    	sum++;
-		if(((100*sum)/height)%10==0)
+		if(((100*sum)/height)%5==0)
 			cout << "\b\b\b\b" << 100*sum/height << "%";
 			flush(cout);
                 for (int x = 0; x < length; ++x) {
@@ -215,6 +215,8 @@ void drawing::draw_image_multithreaded(const char *name_file, int num_threads, i
             file << px_r << " " << px_g << " " << px_b << endl;
         }
     }
+
+    cout << endl;
 
     // Fermer le fichier
     file.close();
