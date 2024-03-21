@@ -15,10 +15,11 @@ struct parameters {
 	int ns{10};
 	Rvector camera_origin{Rvector(0.0,0.0,0.0)};
 	Rvector camera_subject{Rvector(0.0,0.0,-1.0)};
-	Rvector camera_vertical{Rvector(0.0,1.0,0.0)};;
+	Rvector camera_vertical{Rvector(0.0,1.0,0.0)};
+	string output_file{"output_file.ppm"};
 	float camera_fov{90};
 	vector<hitable*> objects;
-
+	vector<material*> materials;
 };
 
 //used to find a string's position in a string vector
@@ -30,13 +31,25 @@ int find(string needle, vector<string> &haystack) {
 			ret=i;
 		i++;
 	}
-
 	return ret;
+}
+
+material *find_material(string needle, vector<material*> haystack) {
+	material *ret=NULL;
+	unsigned int i=0;
+	while(i<haystack.size()) {
+		if(haystack[i]->tag==needle)
+			return haystack[i];
+		i++;
+	}
+	return ret;
+
 }
 
 //function used to set a parameter
 void set(parameters *param, string name, vector<string> values) {
-	vector<string> flags = {"height","width","ns","camera_origin","camera_subject","camera_vertical","camera_fov","sphere"};
+	vector<string> flags = {"height","width","ns","camera_origin","camera_subject",
+		"camera_vertical","camera_fov","sphere","material_matte","material_metal","material_dielectric", "output_file"};
 	//TEMP DEFAULT MATTER
 	matte *tempMat=new matte(Rvector(0.8,0.1,0.1));
 	int n=find(name, flags);
@@ -92,7 +105,7 @@ void set(parameters *param, string name, vector<string> values) {
 		//setting camera_fov
 		case 6:
 			if(values.size()!=1) {
-				cout << "Too many arguments for the flag " << name << " : " << values.size() << " (expected 1)";
+				cout << "Too many/few arguments for the flag " << name << " : " << values.size() << " (expected 1)";
 				break;
 			}
 			param->camera_fov=stof(values[0]);
@@ -100,13 +113,49 @@ void set(parameters *param, string name, vector<string> values) {
 		//creating a sphere
 		case 7:
 			if(values.size()!=5) {
-				cout << "Too many arguments for the flag " << name << " : " << values.size() << " (expected 5)";
+				cout << "Too many/few arguments for the flag " << name << " : " << values.size() << " (expected 5)";
 				break;
 			}
 			cout << "creating sphere " << stof(values[0]) << " / " << stof(values[1]) << " / " << stof(values[2]) << " / " << stof(values[3]) << endl;
-			param->objects.push_back(new sphere(Rvector(stof(values[0]),stof(values[1]),stof(values[2])), stof(values[3]), tempMat));
+			if(find_material(values[4],param->materials)==NULL)
+				cout << "Undefined material tag : " << values[4] << ". Ignoring flag..." << endl;
+			param->objects.push_back(new sphere(Rvector(stof(values[0]),stof(values[1]),stof(values[2])), stof(values[3]), find_material(values[4],param->materials)));
 			break;
-
+		//creating a matte material
+		case 8:
+			if(values.size()!=4) {
+				cout << "Too many/few arguments for the flag " << name << " : " << values.size() << " (expected 5)";
+				break;
+			}
+			param->materials.push_back(new matte(Rvector(stof(values[0]),stof(values[1]),stof(values[2]))));
+			param->materials.back()->tag=values[3];
+			break;
+		//creating a metal material
+		case 9:
+			if(values.size()!=5) {
+				cout << "Too many/few arguments for the flag " << name << " : " << values.size() << " (expected 5)";
+				break;
+			}
+			param->materials.push_back(new metal(Rvector(stof(values[0]),stof(values[1]),stof(values[2])),stof(values[3])));
+			param->materials.back()->tag=values[4];
+			break;
+		//creating a glass
+		case 10:
+			if(values.size()!=2) {
+				cout << "Too many/few arguments for the flag " << name << " : " << values.size() << " (expected 5)";
+				break;
+			}	
+			param->materials.push_back(new dielectric(stof(values[0])));
+			param->materials.back()->tag=values[1];
+			break;
+		//setting output file name
+		case 11:
+			if(values.size()!=1) {
+				cout << "Too many/few arguments for the flag " << name << " : " << values.size() << " (expected 5)";
+				break;
+			}	
+			param->output_file=values[0];
+			break;
 		default:
 			cout << "Unrecognised flag : " << name <<  ". Ignoring the flag..." << endl;
 	}
@@ -123,7 +172,10 @@ char sksp(fstream &pf) {
 
 //function used to parse the input file
 parameters *load(string fileName) {
+	//used to store all the parameters
 	parameters *ret = new parameters;
+
+	//opening the file...
 	fstream pf(fileName);
 	if(!pf.is_open()) {
 		cout << "error loading the file : " << fileName << endl;
@@ -210,10 +262,7 @@ int main(int argc, char **argv) {
 	hitable **world = new hitable*[world_size];
 	for(int i=0; i<world_size; i++)
 		world[i]=param->objects[i];
-	//world[0]=new sphere(Rvector(0,0,-1),0.5,new matte(Rvector(0.8,0.1,0.1)));
-	cout << "number of objects: " << world_size << endl;
-	cout << "prop " << ((sphere*)world[0])->center<< " " << ((sphere*)world[0])->radius <<endl;
-    	img.draw_image_multithreaded("output_image.ppm", max_threads, param->ns, cam, new hitable_list(world,world_size));	
+    	img.draw_image_multithreaded(param->output_file.c_str(), max_threads, param->ns, cam, new hitable_list(world,world_size));	
 	
 	
 	return 0;
