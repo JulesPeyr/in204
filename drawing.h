@@ -152,6 +152,9 @@ void drawing::draw_image_multithreaded(const char *name_file, int num_threads, i
 	
 	Timer timer;
 
+	//barre de progression
+	int sum=0;
+
     // Créer une barrière pour synchroniser les threads
     std::mutex mutex;
 
@@ -161,6 +164,8 @@ void drawing::draw_image_multithreaded(const char *name_file, int num_threads, i
     // Écrire l'en-tête de l'image dans le fichier
     file << "P3\n" << length << " " << height << "\n255\n";
 
+    cout << endl;
+
     // Créer les threads pour le rendu de l'image
     vector<thread> threads;
     int rows_per_thread = height / num_threads;
@@ -169,6 +174,10 @@ void drawing::draw_image_multithreaded(const char *name_file, int num_threads, i
         int end_y = (i == num_threads - 1) ? height : (i + 1) * rows_per_thread;
         threads.emplace_back([&](int start, int end) {
             for (int y = start; y < end; ++y) {
+	    	sum++;
+		if(((100*sum)/height)%10==0)
+			cout << "\b\b\b\b" << 100*sum/height << "%";
+			flush(cout);
                 for (int x = 0; x < length; ++x) {
                     Rvector col(0,0,0);
                     for(int s=0; s<ns; s++){
