@@ -36,6 +36,7 @@ float schlick(float cosine, float ref_idx){ /*approximation polynomiale de la va
 
 class material {
 public:
+	std::string tag;
     virtual bool scatter(const ray& r_in, const hit_record& rec, Rvector& attenuation, ray& scattered) const = 0;
     virtual std::string name() const = 0; // Méthode pour obtenir le nom du matériau
 };
