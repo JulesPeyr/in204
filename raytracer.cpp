@@ -116,7 +116,6 @@ void set(parameters *param, string name, vector<string> values) {
 				cout << "Too many/few arguments for the flag " << name << " : " << values.size() << " (expected 5)";
 				break;
 			}
-			cout << "creating sphere " << stof(values[0]) << " / " << stof(values[1]) << " / " << stof(values[2]) << " / " << stof(values[3]) << endl;
 			if(find_material(values[4],param->materials)==NULL)
 				cout << "Undefined material tag : " << values[4] << ". Ignoring flag..." << endl;
 			param->objects.push_back(new sphere(Rvector(stof(values[0]),stof(values[1]),stof(values[2])), stof(values[3]), find_material(values[4],param->materials)));
